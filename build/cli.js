@@ -65,7 +65,7 @@ function setOrUpdateRepoSecret(octokit, owner, repo, secretName, secretValue, up
 function run(repo, secretName, secretValue, updateOnly, setOnFork) {
     return __awaiter(this, void 0, void 0, function* () {
         const octokit = new rest_1.Octokit({
-            auth: process.env["PAT"]
+            auth: process.env["GH_PAT"]
         });
         const authuser = yield octokit.users.getAuthenticated();
         let owner = authuser.data.login;
@@ -145,10 +145,10 @@ const argv = yargs.options({})
     .parserConfiguration({
     "parse-numbers": false
 })
-    .epilog('Note: You need to set an environment variabled name PAT with a personal access token')
+    .epilog('Note: You need to set an environment variabled name GH_PAT with a personal access token')
     .argv;
-if (process.env["PAT"] == null) {
-    console.error("You need to define an environment variable called PAT with your Personal access token");
+if (process.env["GH_PAT"] == null) {
+    console.error("You need to define an environment variable called GH_PAT with your Personal access token");
     process.exit(-3);
 }
 run(argv.repo, argv.secret, argv.value, argv['update-only'], argv['set-on-fork']);

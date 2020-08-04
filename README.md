@@ -32,13 +32,13 @@ A [personal access token](https://docs.github.com/en/github/authenticating-to-gi
 
 * repo
 
-Set an environment variable called PAT with the value of the token
+Set an environment variable called GH_PAT with the value of the token
 
 In windows use
-> set API_TOKEN=XXXXXX
+> set GH_PAT=XXXXXX
 
 In Linux use
-> export API_TOKEN=XXXXXX
+> export GH_PAT=XXXXXX
 
 The token is NOT persisted anywhere so you need to set it every time you start a new shell
 

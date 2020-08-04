@@ -64,7 +64,7 @@ async function setOrUpdateRepoSecret(octokit: Octokit, owner: string, repo: stri
 export async function run(repo: string, secretName: string, secretValue: string, updateOnly: boolean, setOnFork: boolean): Promise<void> {
 
     const octokit = new Octokit({
-        auth: process.env["PAT"]
+        auth: process.env["GH_PAT"]
     })
 
     const authuser = await octokit.users.getAuthenticated()
@@ -152,11 +152,11 @@ const argv: any = yargs.options({})
     .parserConfiguration({
         "parse-numbers": false
     })
-    .epilog('Note: You need to set an environment variabled name PAT with a personal access token')
+    .epilog('Note: You need to set an environment variabled name GH_PAT with a personal access token')
     .argv;
 
-if (process.env["PAT"] == null) {
-    console.error("You need to define an environment variable called PAT with your Personal access token")
+if (process.env["GH_PAT"] == null) {
+    console.error("You need to define an environment variable called GH_PAT with your Personal access token")
     process.exit(-3);
 }
 
