@@ -106,13 +106,13 @@ export async function run(repo: string, secretName: string, secretValue: string,
             }
         }).then(async (repos) => {
             for (let x = 0; x < repos.length; x++) {
-                const repo = repos[x].name
+                const repoName = repos[x].name
                 const isFork = repos[x].fork
 
                 if (isFork && setOnFork === false) {
-                    console.log(`${Colors.yellow("Skipped")} ${owner}/${repo} is a fork`)
+                    console.log(`${Colors.yellow("Skipped")} ${owner}/${repoName} is a fork`)
                 } else {
-                    await setOrUpdateRepoSecret(octokit, owner, repo, secretName, secretValue, updateOnly)
+                    await setOrUpdateRepoSecret(octokit, owner, repoName, secretName, secretValue, updateOnly)
                 }
             }
         })

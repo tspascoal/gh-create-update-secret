@@ -99,13 +99,13 @@ function run(repo, secretName, secretValue, updateOnly, setOnFork) {
                 }
             }).then((repos) => __awaiter(this, void 0, void 0, function* () {
                 for (let x = 0; x < repos.length; x++) {
-                    const repo = repos[x].name;
+                    const repoName = repos[x].name;
                     const isFork = repos[x].fork;
                     if (isFork && setOnFork === false) {
-                        console.log(`${Colors.yellow("Skipped")} ${owner}/${repo} is a fork`);
+                        console.log(`${Colors.yellow("Skipped")} ${owner}/${repoName} is a fork`);
                     }
                     else {
-                        yield setOrUpdateRepoSecret(octokit, owner, repo, secretName, secretValue, updateOnly);
+                        yield setOrUpdateRepoSecret(octokit, owner, repoName, secretName, secretValue, updateOnly);
                     }
                 }
             }));
