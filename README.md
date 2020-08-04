@@ -2,7 +2,7 @@
 
 Allows you to set or update the value of a workflow [secret](https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets) in a single repo or in all your personal repos.
 
-![CI](https://github.com/tspascoal/gh-create-update-secret/workflows/CI/badge.svg) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=gh-create-update-secret&metric=alert_status)](https://sonarcloud.io/dashboard?id=gh-create-update-secret) ![NPM](https://img.shields.io/npm/v/gh-create-update-secret)
+![CI](https://github.com/tspascoal/gh-create-update-secret/workflows/CI/badge.svg) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=gh-create-update-secret&metric=alert_status)](https://sonarcloud.io/dashboard?id=gh-create-update-secret) [![NPM](https://img.shields.io/npm/v/gh-create-update-secret)](https://www.npmjs.com/package/gh-create-update-secret)
 
 ## Motivation
 
