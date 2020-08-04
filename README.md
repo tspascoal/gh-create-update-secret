@@ -1,17 +1,19 @@
 # GitHub create/update repo(s) secret
 
-Allows you to set or update the value of a workflow [secret](https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets) in a single repo or in all your personal repos. 
+Allows you to set or update the value of a workflow [secret](https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets) in a single repo or in all your personal repos.
+
+![CI](https://github.com/tspascoal/gh-create-update-secret/workflows/CI/badge.svg) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=gh-create-update-secret&metric=alert_status)](https://sonarcloud.io/dashboard?id=gh-create-update-secret) ![NPM](https://img.shields.io/npm/v/gh-create-update-secret)
 
 ## Motivation
 
 Workflow secrets are either scoped to a [repository](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/about-repositories) or to an [organization](https://docs.github.com/en/github/setting-up-and-managing-organizations-and-teams/about-organizations) if you want to share secrets between workflows in different repositories you can either use [organization secrets](https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets#creating-encrypted-secrets-for-an-organization) or replicate the same secret in individual repositories.
 
-If you are using personal (non organization) repositories then you are stuck with having independent copies of the secret in all the repos that needs them. And if you want to change the value then you need to replicate the change on all of them. 
+If you are using personal (non organization) repositories then you are stuck with having independent copies of the secret in all the repos that needs them. And if you want to change the value then you need to replicate the change on all of them.
 
 This utility is meant to allow you so create/update a secret value in all the repositories (**that you own**) in a single call. Or more interestingly update the value of a secret in all the repos that already have a given secret.
 
 So far example if you use secrets to store tokens for third party (or external) services like [sonarcloud](http://sonarcloud.com/) or [NPM](https://www.npmjs.com/) you can use this utility to update the value of all repositories that have a given secret without affecting the ones that do not.
- 
+
 ## Pre requirements
 
 * node
@@ -51,7 +53,7 @@ gh-create-update-secret --secret secretName --value secretValue [--repo repoName
 * **secret** The name of secret to create/update
 * **value** Secret value
 * **repo** (optional) If you you wish to create/update the secret of a single repo. You can specify a repo in format owner/repo or just repo (and then the owner is assumed of the PAT owner). If you omit this parameter then it will create/update all owned repos. (`update-only` is honored)
-* **update-only** (optional flag, default false). Update only on repos that already have the secret. This flag is great when you want to update en masse an existing set of secrets but don't want to add them to repos that do not have them. 
+* **update-only** (optional flag, default false). Update only on repos that already have the secret. This flag is great when you want to update en masse an existing set of secrets but don't want to add them to repos that do not have them.
 * **set-on-fork** (optional flag, default false) Will create/update secrets on forks, otherwise forks are ignored. (only if repo is not specified)'
 
 ### Examples
