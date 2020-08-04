@@ -1,0 +1,38 @@
+{
+  "name": "gh-create-update-secret",
+  "version": "0.9.0",
+  "description": "Add or update repo(s) secrets",
+  "main": "cli.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "npx eslint src --ext .ts",
+    "build": "tsc"
+  },
+  "bin": {
+    "gh-create-update-secret": "build/cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tspascoal/gh-create-update-secret"
+  },
+  "author": "Tiago Pascoal",
+  "license": "ISC",
+  "dependencies": {
+    "@octokit/rest": "^18.0.3",
+    "colors": "^1.4.0",
+    "tweetsodium": "0.0.5",
+    "yargs": "^15.4.1"
+  },
+  "devDependencies": {
+    "@microsoft/eslint-formatter-sarif": "^2.1.5",
+    "@types/node": "^14.0.27",
+    "@types/yargs": "^15.0.5",
+    "@typescript-eslint/eslint-plugin": "^3.8.0",
+    "@typescript-eslint/parser": "^3.8.0",
+    "eslint": "^7.6.0",
+    "typescript": "^3.9.7"
+  },
+  "engines": {
+    "node": ">= 8.3.0"
+  }
+}
