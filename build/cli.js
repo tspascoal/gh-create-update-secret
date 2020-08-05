@@ -26,6 +26,9 @@ function setOrUpdateRepoSecret(octokit, owner, repo, secretName, secretValue, up
                 if (error.status == 404) {
                     console.log(`${Colors.yellow("Skipped")} ${owner}/${repo} does not contain secret ${secretName}`);
                 }
+                else {
+                    console.log(`${Colors.red("Error")} getting secret ${secretName} from ${owner}/${repo}, check PAT scope ${error.status}`);
+                }
                 return;
             });
             if (!secret)
@@ -62,13 +65,30 @@ function setOrUpdateRepoSecret(octokit, owner, repo, secretName, secretValue, up
         console.log(`${Colors.green("Updated")} secret ${secretName} on ${owner}/${repo}`);
     });
 }
+function getUserLoginExitOnFail(octokit) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const authuser = yield octokit.users.getAuthenticated()
+            .catch(error => {
+            if (error.status == 401) {
+                console.log(`${Colors.red("Error")} can't get logged user. Check PAT`);
+            }
+            else if (error.status == 403) {
+                console.log(`${Colors.red("Error")} can't get logged user. Missing user scope?`);
+            }
+            else {
+                console.log(`${Colors.red("Error")} could not get authenticated user: ${error.status}`);
+            }
+            process.exit(-4);
+        });
+        return authuser.data.login;
+    });
+}
 function run(repo, secretName, secretValue, updateOnly, setOnFork) {
     return __awaiter(this, void 0, void 0, function* () {
         const octokit = new rest_1.Octokit({
             auth: process.env["GH_PAT"]
         });
-        const authuser = yield octokit.users.getAuthenticated();
-        let owner = authuser.data.login;
+        let owner;
         if (repo) {
             if (repo.indexOf("/") !== -1) {
                 const parts = repo.split("/");
@@ -78,6 +98,9 @@ function run(repo, secretName, secretValue, updateOnly, setOnFork) {
                 }
                 owner = parts[0];
                 repo = parts[1];
+            }
+            else {
+                owner = yield getUserLoginExitOnFail(octokit);
             }
             console.log(`checking if ${owner}/${repo} exists`);
             yield octokit.repos.get({
@@ -90,6 +113,7 @@ function run(repo, secretName, secretValue, updateOnly, setOnFork) {
             }));
         }
         else {
+            owner = yield getUserLoginExitOnFail(octokit);
             console.log(`Getting repositories for which ${owner} is owner`);
             octokit.paginate(octokit.repos.listForAuthenticatedUser, {
                 "affiliation": "owner",

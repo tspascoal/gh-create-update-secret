@@ -18,8 +18,9 @@ async function setOrUpdateRepoSecret(octokit: Octokit, owner: string, repo: stri
 
             if (error.status == 404) {
                 console.log(`${Colors.yellow("Skipped")} ${owner}/${repo} does not contain secret ${secretName}`)
+            } else {
+                console.log(`${Colors.red("Error")} getting secret ${secretName} from ${owner}/${repo}, check PAT scope ${error.status}`)
             }
-
             return
         })
 
@@ -61,15 +62,29 @@ async function setOrUpdateRepoSecret(octokit: Octokit, owner: string, repo: stri
     console.log(`${Colors.green("Updated")} secret ${secretName} on ${owner}/${repo}`)
 }
 
+async function getUserLoginExitOnFail(octokit: Octokit) : Promise<string> {
+    const authuser = await octokit.users.getAuthenticated()
+    .catch(error => {
+        if (error.status == 401) {
+            console.log(`${Colors.red("Error")} can't get logged user. Check PAT`)
+        } else if (error.status == 403) {
+            console.log(`${Colors.red("Error")} can't get logged user. Missing user scope?`)
+        } else {
+            console.log(`${Colors.red("Error")} could not get authenticated user: ${error.status}`)
+        }
+        process.exit(-4)
+    })
+    
+    return authuser.data.login
+}
+
 export async function run(repo: string, secretName: string, secretValue: string, updateOnly: boolean, setOnFork: boolean): Promise<void> {
 
     const octokit = new Octokit({
         auth: process.env["GH_PAT"]
     })
 
-    const authuser = await octokit.users.getAuthenticated()
-
-    let owner = authuser.data.login
+    let owner : string
 
     if (repo) {
 
@@ -83,6 +98,8 @@ export async function run(repo: string, secretName: string, secretValue: string,
 
             owner = parts[0]
             repo = parts[1]
+        } else {
+            owner = await getUserLoginExitOnFail(octokit)
         }
 
         console.log(`checking if ${owner}/${repo} exists`)
@@ -95,6 +112,8 @@ export async function run(repo: string, secretName: string, secretValue: string,
             await setOrUpdateRepoSecret(octokit, owner, repo, secretName, secretValue, updateOnly)
         })
     } else {
+
+        owner = await getUserLoginExitOnFail(octokit)
 
         console.log(`Getting repositories for which ${owner} is owner`)
 
