@@ -1,8 +1,12 @@
 name: CI
 
 on:
-  push:
+  push: 
+    branches: 
+      - master
   pull_request:
+    branches: 
+      - master
 
 jobs:
 
@@ -45,7 +49,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: package
-        path: gh-create-update-secret-*.
+        path: gh-create-update-secret-*.tgz
         
   code_scanning:
     runs-on: ubuntu-latest
