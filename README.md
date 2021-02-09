@@ -17,7 +17,7 @@ So far example if you use secrets to store tokens for third party (or external) 
 ## Pre requirements
 
 * node
-* azure-boards-rewrite-links npm package
+* gh-create-update-secret npm package
 * a Personal access token (PAT)
 
 The package can be installed (globally) by calling
