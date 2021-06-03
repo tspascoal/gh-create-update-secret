@@ -73,6 +73,8 @@ Updates secret the `sonartoken` with value `dummytoken` on all repositories owne
 
 ```sh
 gh-create-update-secret --secret sonartoken --value "dummytoken" --update-only
+
+
 ```
 
 Sets or updates the secret `sonartoken` with value `dummytoken` on all repositories owned by the user that owns the PAT.
