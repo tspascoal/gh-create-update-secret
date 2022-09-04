@@ -76,13 +76,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: scan
-        run: semgrep scan --config=auto --sarif --output=semgrep.sarif --config=policy
+      - name: semgrep ci
+        run: semgrep ci --sarif --output=semgrep.sarif
         env:
           SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
-
-      - name: semgrep ci
-        run: semgrep ci
 
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
