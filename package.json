@@ -1,6 +1,6 @@
 {
   "name": "gh-create-update-secret",
-  "version": "0.9.4",
+  "version": "0.9.5",
   "description": "Add or update repo(s) secrets",
   "main": "cli.js",
   "scripts": {
