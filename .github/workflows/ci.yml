@@ -37,7 +37,7 @@ jobs:
       run: npx eslint src --ext .ts -f @microsoft/eslint-formatter-sarif -o results.sarif
 
     - name: Upload lint results (SARIF)
-      uses: github/codeql-action/upload-sarif@v1
+      uses: github/codeql-action/upload-sarif@v2
       with:
         sarif_file: results.sarif
       if: always()
@@ -46,7 +46,7 @@ jobs:
       run: npm pack
 
     - name: upload npm package
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: package
         path: gh-create-update-secret-*.tgz
@@ -56,7 +56,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v1
+      uses: github/codeql-action/init@v2
       with:
         languages: javascript
         config-file: ./.github/codeql/codeql-config.yml
@@ -65,7 +65,7 @@ jobs:
     - run: npm run build
 
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v1
+      uses: github/codeql-action/analyze@v2
       
   semgrep:
     name: Semgrep scan
@@ -82,7 +82,7 @@ jobs:
           SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
 
       - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: semgrep.sarif
         if: always()
@@ -96,7 +96,7 @@ jobs:
 
     steps:
       - name: Download npm package
-        uses: actions/download-artifact@v4.1.7
+        uses: actions/download-artifact@v4
         with:
           name: package
       - name: install npm package
